@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Text } from "react-native";
 import { BookingHistoryScreen } from "../screens/user/BookingHistoryScreen";
+import { BookingDetailScreen } from "../screens/user/BookingDetailScreen";
 import { CheckoutScreen } from "../screens/user/CheckoutScreen";
 import { ContactScreen } from "../screens/user/ContactScreen";
 import { HomeScreen } from "../screens/user/HomeScreen";
@@ -69,6 +70,7 @@ export function UserNavigator() {
       <Stack.Screen name="MainTabs" component={MainTabs} />
       <Stack.Screen name="TourDetail" component={TourDetailScreen} />
       <Stack.Screen name="Checkout" component={CheckoutScreen} />
+      <Stack.Screen name="BookingDetail" component={BookingDetailScreen} />
     </Stack.Navigator>
   );
 }

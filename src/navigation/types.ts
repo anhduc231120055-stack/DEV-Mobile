@@ -15,12 +15,14 @@ export type UserStackParamList = {
   MainTabs: undefined;
   TourDetail: undefined;
   Checkout: undefined;
+  BookingDetail: { bookingId: string };
 };
 
 export type AdminStackParamList = {
   AdminDashboard: undefined;
   AdminTours: undefined;
   AdminBookings: undefined;
+  AdminBookingDetail: { bookingId: string };
   AdminAccounts: undefined;
   AdminReviews: undefined;
   AdminStats: undefined;

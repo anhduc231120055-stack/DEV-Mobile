@@ -5,28 +5,58 @@ import { AppHeader } from "../../components/common/AppHeader";
 import { InfoCard } from "../../components/common/InfoCard";
 import { Screen } from "../../components/common/Screen";
 import { useAppContext } from "../../context/AppContext";
+import { colors } from "../../theme/colors";
 import type { MainTabParamList } from "../../navigation/types";
 
 type Props = BottomTabScreenProps<MainTabParamList, "Profile">;
 
 export function ProfileScreen({}: Props) {
-  const { bookings, logout, tours } = useAppContext();
+  const { bookings, currentUser, logout, tours } = useAppContext();
 
   return (
     <Screen>
-      <AppHeader title="Tài khoản" subtitle="Tổng hợp nhanh trạng thái người dùng trong app mobile." />
-      <View style={styles.statsRow}>
-        <InfoCard title="Tour đang có" value={String(tours.length)} />
-        <InfoCard title="Đơn đã tạo" value={String(bookings.length)} />
+      <AppHeader title="Tai khoan" subtitle="Thong tin session hien tai duoc lay tu auth backend sau khi dang nhap thanh cong." />
+
+      <View style={styles.identityCard}>
+        <Text style={styles.name}>{currentUser?.name ?? "Khach"}</Text>
+        <Text style={styles.meta}>{currentUser?.email ?? "Chua dang nhap"}</Text>
+        <Text style={styles.role}>{currentUser?.role === "admin" ? "Admin session" : "User session"}</Text>
       </View>
+
+      <View style={styles.statsRow}>
+        <InfoCard title="Tour dang co" value={String(tours.length)} />
+        <InfoCard title="Don da tao" value={String(bookings.length)} />
+      </View>
+
       <Pressable style={styles.logoutButton} onPress={logout}>
-        <Text style={styles.logoutText}>Đăng xuất</Text>
+        <Text style={styles.logoutText}>Dang xuat</Text>
       </Pressable>
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
+  identityCard: {
+    backgroundColor: colors.surface,
+    borderRadius: 24,
+    padding: 20,
+    gap: 6,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  name: {
+    color: colors.primary,
+    fontWeight: "900",
+    fontSize: 22,
+  },
+  meta: {
+    color: colors.textMuted,
+  },
+  role: {
+    marginTop: 4,
+    color: colors.secondary,
+    fontWeight: "800",
+  },
   statsRow: {
     flexDirection: "row",
     flexWrap: "wrap",

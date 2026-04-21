@@ -2,6 +2,7 @@ import React from "react";
 import { Image, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { AppHeader } from "../../components/common/AppHeader";
+import { EmptyState } from "../../components/common/EmptyState";
 import { SectionTitle } from "../../components/common/SectionTitle";
 import { useAppContext } from "../../context/AppContext";
 import { colors } from "../../theme/colors";
@@ -15,14 +16,14 @@ export function TourDetailScreen({ navigation }: Props) {
   if (!selectedTour) {
     return (
       <View style={styles.empty}>
-        <Text>Không có tour được chọn.</Text>
+        <EmptyState title="Khong co tour duoc chon" description="Hay quay lai danh sach tour va chon mot diem den de xem chi tiet." />
       </View>
     );
   }
 
   return (
     <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
-      <AppHeader title="Chi tiết tour" subtitle="Nối từ `chi_ti_t_tour_user`." onBack={() => navigation.goBack()} />
+      <AppHeader title="Chi tiet tour" subtitle="Man nay hien thi du lieu tour da map tu backend sang giao dien mobile." onBack={() => navigation.goBack()} />
       <Image source={{ uri: selectedTour.gallery[0] ?? selectedTour.image }} style={styles.heroImage} />
 
       <Text style={styles.title}>{selectedTour.title}</Text>
@@ -30,11 +31,11 @@ export function TourDetailScreen({ navigation }: Props) {
         {selectedTour.duration} • {selectedTour.location} • ★ {selectedTour.rating}
       </Text>
       <View style={styles.priceCard}>
-        <Text style={styles.priceCaption}>Giá từ</Text>
+        <Text style={styles.priceCaption}>Gia tu</Text>
         <Text style={styles.priceValue}>{selectedTour.price}</Text>
       </View>
 
-      <SectionTitle title="Điểm nổi bật" subtitle={selectedTour.tagline} />
+      <SectionTitle title="Diem noi bat" subtitle={selectedTour.tagline} />
       <View style={styles.blockList}>
         {selectedTour.highlights.map((item) => (
           <View key={item} style={styles.highlight}>
@@ -44,7 +45,7 @@ export function TourDetailScreen({ navigation }: Props) {
         ))}
       </View>
 
-      <SectionTitle title="Lịch trình" />
+      <SectionTitle title="Lich trinh" />
       <View style={styles.blockList}>
         {selectedTour.itinerary.map((item) => (
           <View key={`${item.time}-${item.title}`} style={styles.timelineItem}>
@@ -58,7 +59,7 @@ export function TourDetailScreen({ navigation }: Props) {
       </View>
 
       <Pressable style={styles.cta} onPress={() => navigation.navigate("Checkout")}>
-        <Text style={styles.ctaText}>Tiếp tục đặt tour</Text>
+        <Text style={styles.ctaText}>Tiep tuc dat tour</Text>
       </Pressable>
     </ScrollView>
   );
@@ -79,6 +80,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    paddingHorizontal: 20,
   },
   heroImage: {
     width: "100%",

@@ -1,6 +1,7 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { AccountManagementScreen } from "../screens/admin/AccountManagementScreen";
+import { AdminBookingDetailScreen } from "../screens/admin/AdminBookingDetailScreen";
 import { AdminDashboardScreen } from "../screens/admin/AdminDashboardScreen";
 import { BookingManagementScreen } from "../screens/admin/BookingManagementScreen";
 import { ReviewManagementScreen } from "../screens/admin/ReviewManagementScreen";
@@ -16,6 +17,7 @@ export function AdminNavigator() {
       <Stack.Screen name="AdminDashboard" component={AdminDashboardScreen} />
       <Stack.Screen name="AdminTours" component={TourManagementScreen} />
       <Stack.Screen name="AdminBookings" component={BookingManagementScreen} />
+      <Stack.Screen name="AdminBookingDetail" component={AdminBookingDetailScreen} />
       <Stack.Screen name="AdminAccounts" component={AccountManagementScreen} />
       <Stack.Screen name="AdminReviews" component={ReviewManagementScreen} />
       <Stack.Screen name="AdminStats" component={StatisticsScreen} />

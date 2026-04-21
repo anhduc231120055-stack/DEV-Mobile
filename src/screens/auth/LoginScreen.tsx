@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { ActionChip } from "../../components/common/ActionChip";
 import { AppHeader } from "../../components/common/AppHeader";
 import { Screen } from "../../components/common/Screen";
 import { useAppContext } from "../../context/AppContext";
@@ -10,30 +11,75 @@ import type { AuthStackParamList } from "../../navigation/types";
 type Props = NativeStackScreenProps<AuthStackParamList, "Login">;
 
 export function LoginScreen({ navigation }: Props) {
-  const { loginAsAdmin, loginAsUser } = useAppContext();
+  const { authError, authStatus, login } = useAppContext();
+  const [mode, setMode] = useState<"user" | "admin">("user");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const isSubmitting = authStatus === "loading";
+
+  async function handleLogin() {
+    await login(mode, {
+      email: email.trim(),
+      password,
+    });
+  }
 
   return (
     <Screen contentStyle={styles.content}>
       <AppHeader
-        title="Đăng nhập"
-        subtitle="Từ màn nguồn đăng nhập, tôi chuyển sang layout mobile và nối trực tiếp tới luồng user hoặc admin."
+        title="Dang nhap"
+        subtitle="Da noi form vao auth backend. User va admin dung hai endpoint login rieng, sau do dieu huong bang role that."
       />
 
       <View style={styles.panel}>
-        <TextInput placeholder="Email hoặc số điện thoại" placeholderTextColor={colors.textMuted} style={styles.input} />
-        <TextInput placeholder="Mật khẩu" placeholderTextColor={colors.textMuted} style={styles.input} secureTextEntry />
+        <View style={styles.modeRow}>
+          <ActionChip label="Nguoi dung" active={mode === "user"} onPress={() => setMode("user")} />
+          <ActionChip label="Admin" active={mode === "admin"} onPress={() => setMode("admin")} />
+        </View>
 
-        <Pressable style={styles.primaryButton} onPress={loginAsUser}>
-          <Text style={styles.primaryButtonText}>Vào app người dùng</Text>
+        <View style={styles.notice}>
+          <Text style={styles.noticeTitle}>{mode === "user" ? "Dang nhap user" : "Dang nhap admin"}</Text>
+          <Text style={styles.noticeText}>
+            {mode === "user"
+              ? "Su dung POST /api/auth/login va cho role user vao stack nguoi dung."
+              : "Su dung POST /api/admin-auth/login va vao thang stack quan tri neu dang nhap thanh cong."}
+          </Text>
+        </View>
+
+        <TextInput
+          autoCapitalize="none"
+          keyboardType="email-address"
+          placeholder="Email"
+          placeholderTextColor={colors.textMuted}
+          style={styles.input}
+          value={email}
+          onChangeText={setEmail}
+        />
+        <TextInput
+          placeholder="Mat khau"
+          placeholderTextColor={colors.textMuted}
+          style={styles.input}
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+        />
+
+        <View style={styles.helperRow}>
+          <Text style={styles.helperLabel}>Trang thai</Text>
+          <Text style={styles.helperValue}>{isSubmitting ? "Dang gui..." : "San sang"}</Text>
+        </View>
+
+        {authError ? <Text style={styles.errorText}>{authError}</Text> : null}
+
+        <Pressable disabled={isSubmitting} style={[styles.primaryButton, isSubmitting && styles.buttonDisabled]} onPress={() => void handleLogin()}>
+          <Text style={styles.primaryButtonText}>{isSubmitting ? "Dang dang nhap..." : mode === "user" ? "Dang nhap user" : "Dang nhap admin"}</Text>
         </Pressable>
 
-        <Pressable style={styles.secondaryButton} onPress={loginAsAdmin}>
-          <Text style={styles.secondaryButtonText}>Vào khu admin</Text>
-        </Pressable>
-
-        <Pressable onPress={() => navigation.navigate("Register")}>
-          <Text style={styles.link}>Chưa có tài khoản? Đăng ký</Text>
-        </Pressable>
+        <View style={styles.footerRow}>
+          <Pressable onPress={() => navigation.navigate("Register")}>
+            <Text style={styles.link}>Chua co tai khoan? Dang ky</Text>
+          </Pressable>
+        </View>
       </View>
     </Screen>
   );
@@ -49,6 +95,27 @@ const styles = StyleSheet.create({
     borderRadius: 28,
     padding: 20,
     gap: 14,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  modeRow: {
+    flexDirection: "row",
+    gap: 10,
+  },
+  notice: {
+    backgroundColor: colors.primarySoft,
+    borderRadius: 18,
+    padding: 16,
+    gap: 6,
+  },
+  noticeTitle: {
+    color: colors.primary,
+    fontWeight: "900",
+    fontSize: 16,
+  },
+  noticeText: {
+    color: colors.textMuted,
+    lineHeight: 21,
   },
   input: {
     backgroundColor: colors.surfaceMuted,
@@ -57,30 +124,46 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     color: colors.text,
   },
+  helperRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingTop: 2,
+  },
+  helperLabel: {
+    color: colors.textMuted,
+    fontWeight: "700",
+  },
+  helperValue: {
+    color: colors.primary,
+    fontWeight: "800",
+  },
+  errorText: {
+    color: colors.danger,
+    fontWeight: "700",
+    lineHeight: 20,
+  },
   primaryButton: {
     backgroundColor: colors.primary,
     borderRadius: 16,
     paddingVertical: 16,
     alignItems: "center",
   },
+  buttonDisabled: {
+    opacity: 0.65,
+  },
   primaryButtonText: {
     color: colors.surface,
     fontWeight: "900",
   },
-  secondaryButton: {
-    backgroundColor: "#FDE68A",
-    borderRadius: 16,
-    paddingVertical: 16,
-    alignItems: "center",
-  },
-  secondaryButtonText: {
-    color: "#78350F",
-    fontWeight: "900",
-  },
   link: {
-    marginTop: 6,
-    textAlign: "center",
     color: colors.secondary,
     fontWeight: "700",
+  },
+  footerRow: {
+    marginTop: 4,
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
   },
 });
