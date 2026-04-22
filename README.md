@@ -1,69 +1,59 @@
-# Digital Voyager React Native
+# DEV-Mobile
 
-Frontend mobile React Native được dựng lại từ bộ giao diện HTML rời trong repo nguồn.
+This repository is now split into two clear application boundaries:
 
-## Cấu trúc chính
+- `frontend/`: Expo React Native mobile client
+- `backend/`: Express + MySQL API
 
-- `src/navigation`: điều hướng `auth`, `user`, `admin`
-- `src/screens/auth`: đăng nhập, đăng ký
-- `src/screens/user`: trang chủ, danh sách tour, chi tiết tour, thanh toán, lịch sử, liên hệ, tài khoản
-- `src/screens/admin`: dashboard, tour, booking, tài khoản, review, thống kê
-- `src/components/common`: header, screen wrapper, section, info card
-- `src/components/tour`: component card cho tour
-- `src/context`: state dùng cho session, tours, bookings và admin data
-- `src/data`: dữ liệu mẫu còn giữ lại cho một số phần demo
-- `src/services`: API client, auth, bookings, tours, admin và session storage
+The root folder only contains shared repo files and helper scripts so you can run each side without guessing where it lives.
 
-## Mapping từ folder giao diện nguồn
+## Project structure
 
-- `ng_nh_p_user` -> `src/screens/auth/LoginScreen.tsx`
-- `ng_k_user` -> `src/screens/auth/RegisterScreen.tsx`
-- `trang_ch_user` -> `src/screens/user/HomeScreen.tsx`
-- `danh_s_ch_tour_user` -> `src/screens/user/ToursScreen.tsx`
-- `chi_ti_t_tour_user` -> `src/screens/user/TourDetailScreen.tsx`
-- `thanh_to_n_user` -> `src/screens/user/CheckoutScreen.tsx`
-- `l_ch_s_t_tour_user` -> `src/screens/user/BookingHistoryScreen.tsx`
-- `li_n_h_user` -> `src/screens/user/ContactScreen.tsx`
-- Các folder `dashboard_admin_*`, `qu_n_l_*`, `th_ng_k_*` -> `src/screens/admin/*`
+```text
+DEV-Mobile/
+|-- frontend/
+|   |-- App.tsx
+|   |-- app.json
+|   |-- package.json
+|   `-- src/
+|-- backend/
+|   |-- server.js
+|   |-- package.json
+|   `-- database/
+|-- .gitignore
+|-- package.json
+`-- README.md
+```
 
-## Luồng đã nối
+## Quick start
 
-- `Login` -> `Register`
-- `Login` -> `User App`
-- `Login` -> `Admin App`
-- `Home` -> `Tours`
-- `Home/Tours` -> `TourDetail`
-- `TourDetail` -> `Checkout`
-- `Bookings` -> `BookingDetail`
-- `Admin Bookings` -> `AdminBookingDetail`
-- `Admin Dashboard` -> toàn bộ màn quản trị
-
-## Chạy app
+Install each side once:
 
 ```bash
-cd react-native-app
-npm install
-npm start
+npm run install:frontend
+npm run install:backend
 ```
 
-Tạo file `.env` từ `.env.example` trước khi chạy app.
+Run the mobile app:
 
-## Cấu hình API
-
-- App ưu tiên đọc `EXPO_PUBLIC_API_BASE_URL` từ file `.env`
-- Ví dụ:
-
-```env
-EXPO_PUBLIC_API_BASE_URL=http://192.168.1.24:3000/api
+```bash
+npm run frontend:start
 ```
 
-- Nếu không có biến env này:
-  - Android emulator sẽ fallback về `http://10.0.2.2:3000/api`
-  - Các môi trường khác sẽ fallback về `http://localhost:3000/api`
+Run the API:
 
-## Ghi chú
+```bash
+npm run backend:dev
+```
 
-- Project dùng Expo.
-- Navigation dùng `@react-navigation`.
-- Frontend đã được nối với backend API trong repo.
-- Session đăng nhập hiện được persist cục bộ để mở lại app không bị mất phiên ngay.
+## Environment files
+
+- `frontend/.env.example` contains the mobile API base URL example
+- `backend/.env.example` contains the API server and database settings
+
+## Notes
+
+- Android emulator usually needs `http://10.0.2.2:3000/api` instead of `localhost`
+- Physical devices should point `EXPO_PUBLIC_API_BASE_URL` to your machine's LAN IP
+- Frontend-specific setup is documented in `frontend/README.md`
+- Backend-specific setup is documented in `backend/README.md`

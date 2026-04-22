@@ -25,6 +25,7 @@ pnpm-debug.log*
 # local env files
 .env
 .env.*
+!frontend/.env.example
 !backend/.env.example
 
 # editor / OS
