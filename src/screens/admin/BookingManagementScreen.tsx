@@ -29,7 +29,7 @@ export function BookingManagementScreen({ navigation }: Props) {
     <Screen>
       <AppHeader
         title="Quan ly booking"
-        subtitle="Man nay doc admin bookings API va cho phep cap nhat status truc tiep."
+        subtitle="Theo doi danh sach don hang va cap nhat trang thai xu ly."
         onBack={() => navigation.goBack()}
       />
 
@@ -45,10 +45,10 @@ export function BookingManagementScreen({ navigation }: Props) {
       {isAdminLoading ? (
         <View style={styles.loadingCard}>
           <Text style={styles.loadingTitle}>Dang tai booking...</Text>
-          <Text style={styles.loadingText}>Admin panel dang goi /api/bookings.</Text>
+          <Text style={styles.loadingText}>He thong dang tai danh sach booking moi nhat.</Text>
         </View>
       ) : visibleBookings.length === 0 ? (
-        <EmptyState title="Khong co booking nao" description="Danh sach don se hien o day khi backend va database san sang." />
+        <EmptyState title="Khong co booking nao" description="Danh sach don se hien o day khi he thong co du lieu." />
       ) : (
         <View style={styles.list}>
           {visibleBookings.map((booking) => (

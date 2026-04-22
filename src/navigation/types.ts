@@ -5,7 +5,7 @@ export type AuthStackParamList = {
 
 export type MainTabParamList = {
   Home: undefined;
-  Tours: undefined;
+  Tours: { query?: string } | undefined;
   Bookings: undefined;
   Contact: undefined;
   Profile: undefined;
@@ -24,6 +24,7 @@ export type AdminStackParamList = {
   AdminBookings: undefined;
   AdminBookingDetail: { bookingId: string };
   AdminAccounts: undefined;
+  AdminAccountDetail: { accountId: string };
   AdminReviews: undefined;
   AdminStats: undefined;
 };

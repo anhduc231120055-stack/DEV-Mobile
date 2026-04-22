@@ -78,7 +78,7 @@ export function AdminBookingDetailScreen({ navigation, route }: Props) {
     <Screen>
       <AppHeader
         title="Chi tiet booking"
-        subtitle="Admin detail nay doc GET /api/bookings/:id de hien thi don hang, customer va payment."
+        subtitle="Xem thong tin don hang, hanh khach va giao dich lien quan."
         onBack={() => navigation.goBack()}
         rightLabel="Tai lai"
         onRightPress={() => void loadBooking()}
@@ -87,7 +87,7 @@ export function AdminBookingDetailScreen({ navigation, route }: Props) {
       {isLoading ? (
         <View style={styles.loadingCard}>
           <Text style={styles.loadingTitle}>Dang tai booking...</Text>
-          <Text style={styles.loadingText}>Dang dong bo chi tiet don hang tu backend admin.</Text>
+          <Text style={styles.loadingText}>He thong dang tai chi tiet booking.</Text>
         </View>
       ) : !booking ? (
         <EmptyState title="Khong tim thay booking" description={error || "Booking nay khong ton tai hoac khong tai duoc."} />
@@ -119,9 +119,9 @@ export function AdminBookingDetailScreen({ navigation, route }: Props) {
             <Row label="Diem hen" value={booking.meetingPoint || "Dang cap nhat"} />
           </View>
 
-          <SectionTitle title="Danh sach hanh khach" subtitle="Neu booking co `booking_customers`, admin se thay o day." />
+          <SectionTitle title="Danh sach hanh khach" subtitle="Thong tin hanh khach di cung se duoc hien thi tai day." />
           {!booking.customers?.length ? (
-            <EmptyState title="Chua co hanh khach chi tiet" description="Backend chua tra ve danh sach hanh khach cho booking nay." />
+            <EmptyState title="Chua co hanh khach chi tiet" description="Chua co thong tin hanh khach cho booking nay." />
           ) : (
             <View style={styles.list}>
               {booking.customers.map((customer) => (
@@ -132,7 +132,7 @@ export function AdminBookingDetailScreen({ navigation, route }: Props) {
 
           <SectionTitle title="Thanh toan" />
           {!booking.payments?.length && !booking.latestPayment ? (
-            <EmptyState title="Chua co payment" description="Booking nay chua co giao dich thanh toan nao trong he thong." />
+            <EmptyState title="Chua co thanh toan" description="Booking nay chua co giao dich thanh toan nao trong he thong." />
           ) : (
             <View style={styles.list}>
               {(booking.payments?.length ? booking.payments : booking.latestPayment ? [booking.latestPayment] : []).map((payment) => (

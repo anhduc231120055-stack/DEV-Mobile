@@ -49,7 +49,7 @@ export function BookingHistoryScreen({ navigation }: Props) {
     <Screen>
       <AppHeader
         title="Lich su dat tour"
-        subtitle="Man nay da doc getMyBookings va cho phep huy booking PENDING truc tiep tu backend."
+        subtitle="Theo doi cac don da dat va cap nhat trang thai moi nhat."
       />
 
       <View style={styles.filterRow}>
@@ -64,7 +64,7 @@ export function BookingHistoryScreen({ navigation }: Props) {
       {isBookingsLoading ? (
         <View style={styles.loadingCard}>
           <Text style={styles.loadingTitle}>Dang tai booking...</Text>
-          <Text style={styles.loadingText}>He thong dang dong bo lich su dat tour tu backend.</Text>
+          <Text style={styles.loadingText}>He thong dang tai lich su dat tour cua ban.</Text>
         </View>
       ) : visibleBookings.length === 0 ? (
         <EmptyState

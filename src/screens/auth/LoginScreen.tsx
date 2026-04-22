@@ -28,22 +28,13 @@ export function LoginScreen({ navigation }: Props) {
     <Screen contentStyle={styles.content}>
       <AppHeader
         title="Dang nhap"
-        subtitle="Da noi form vao auth backend. User va admin dung hai endpoint login rieng, sau do dieu huong bang role that."
+        subtitle="Nhap thong tin tai khoan de tiep tuc."
       />
 
       <View style={styles.panel}>
         <View style={styles.modeRow}>
           <ActionChip label="Nguoi dung" active={mode === "user"} onPress={() => setMode("user")} />
           <ActionChip label="Admin" active={mode === "admin"} onPress={() => setMode("admin")} />
-        </View>
-
-        <View style={styles.notice}>
-          <Text style={styles.noticeTitle}>{mode === "user" ? "Dang nhap user" : "Dang nhap admin"}</Text>
-          <Text style={styles.noticeText}>
-            {mode === "user"
-              ? "Su dung POST /api/auth/login va cho role user vao stack nguoi dung."
-              : "Su dung POST /api/admin-auth/login va vao thang stack quan tri neu dang nhap thanh cong."}
-          </Text>
         </View>
 
         <TextInput
@@ -101,21 +92,6 @@ const styles = StyleSheet.create({
   modeRow: {
     flexDirection: "row",
     gap: 10,
-  },
-  notice: {
-    backgroundColor: colors.primarySoft,
-    borderRadius: 18,
-    padding: 16,
-    gap: 6,
-  },
-  noticeTitle: {
-    color: colors.primary,
-    fontWeight: "900",
-    fontSize: 16,
-  },
-  noticeText: {
-    color: colors.textMuted,
-    lineHeight: 21,
   },
   input: {
     backgroundColor: colors.surfaceMuted,

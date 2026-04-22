@@ -29,7 +29,7 @@ export function AccountManagementScreen({ navigation }: Props) {
     <Screen>
       <AppHeader
         title="Quan ly tai khoan"
-        subtitle="Man nay doc users API va goi update role / delete khi admin thao tac."
+        subtitle="Theo doi danh sach tai khoan va cap nhat quyen truy cap khi can."
         onBack={() => navigation.goBack()}
       />
 
@@ -45,10 +45,10 @@ export function AccountManagementScreen({ navigation }: Props) {
       {isAdminLoading ? (
         <View style={styles.loadingCard}>
           <Text style={styles.loadingTitle}>Dang tai danh sach user...</Text>
-          <Text style={styles.loadingText}>He thong dang goi /api/users.</Text>
+          <Text style={styles.loadingText}>He thong dang tai du lieu tai khoan moi nhat.</Text>
         </View>
       ) : visibleUsers.length === 0 ? (
-        <EmptyState title="Khong co tai khoan nao" description="Danh sach nguoi dung se hien tai day khi users API co du lieu." />
+        <EmptyState title="Khong co tai khoan nao" description="Danh sach nguoi dung se hien tai day khi he thong co du lieu." />
       ) : (
         <View style={styles.list}>
           {visibleUsers.map((account) => (
@@ -73,7 +73,7 @@ export function AccountManagementScreen({ navigation }: Props) {
                     <Text style={styles.secondaryActionText}>Admin core</Text>
                   </View>
                 )}
-                <Pressable style={styles.secondaryAction}>
+                <Pressable style={styles.secondaryAction} onPress={() => navigation.navigate("AdminAccountDetail", { accountId: account.id })}>
                   <Text style={styles.secondaryActionText}>Chi tiet</Text>
                 </Pressable>
                 <Pressable disabled={account.role === "ADMIN"} style={[styles.dangerAction, account.role === "ADMIN" && styles.disabledAction]} onPress={() => void deleteUserByAdmin(account.id)}>

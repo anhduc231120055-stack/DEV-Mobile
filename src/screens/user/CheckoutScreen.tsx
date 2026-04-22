@@ -100,18 +100,18 @@ export function CheckoutScreen({ navigation }: Props) {
     <Screen>
       <AppHeader
         title="Thanh toan"
-        subtitle="Flow nay da duoc rut gon cho khop backend hien tai: tao booking voi ngay di va so khach, sau do tao payment."
+        subtitle="Xac nhan thong tin dat tour va chon phuong thuc thanh toan phu hop."
         onBack={() => navigation.goBack()}
       />
 
-      <SectionTitle title="Thong tin lien he" subtitle="Thong tin nay lay tu tai khoan dang nhap. Form checkout khong nhap lai cac truong backend chua luu." />
+      <SectionTitle title="Thong tin lien he" subtitle="Thong tin nay duoc su dung de lien he va xac nhan booking." />
       <View style={styles.contactCard}>
         <Row label="Khach dat" value={currentUser?.name || "Dang cap nhat"} />
         <Row label="Email" value={currentUser?.email || "Dang cap nhat"} />
         <Row label="So dien thoai" value={currentUser?.phone || "Dang cap nhat"} />
       </View>
 
-      <SectionTitle title="Thong tin booking" subtitle="Chi nhap nhung field ma backend dang xu ly thuc su." />
+      <SectionTitle title="Thong tin booking" subtitle="Nhap ngay khoi hanh va so luong khach cho chuyen di." />
       <View style={styles.form}>
         <TextInput
           placeholder="Ngay khoi hanh (YYYY-MM-DD)"
@@ -131,16 +131,16 @@ export function CheckoutScreen({ navigation }: Props) {
       </View>
 
       <View style={styles.infoCard}>
-        <Text style={styles.infoTitle}>Luu y hien tai</Text>
+        <Text style={styles.infoTitle}>Luu y</Text>
         <Text style={styles.infoText}>
-          Backend dang nhan `tour_id`, `travel_date`, `number_of_people` cho booking va `booking_id`, `method` cho payment.
+          Vui long kiem tra ky ngay di, so khach va tong chi phi du kien truoc khi xac nhan.
         </Text>
         <Text style={styles.infoText}>
-          Neu muon luu ghi chu, thong tin hanh khach di cung hoac contact rieng cho moi booking, can mo rong API va bang `booking_customers`.
+          Sau khi gui yeu cau, he thong se tao booking va cap nhat trang thai thanh toan tuong ung.
         </Text>
       </View>
 
-      <SectionTitle title="Phuong thuc thanh toan" subtitle="Map truc tiep toi /api/payments voi method hop le theo backend." />
+      <SectionTitle title="Phuong thuc thanh toan" subtitle="Chon cach thanh toan tien loi nhat cho ban." />
       <View style={styles.chipRow}>
         {paymentOptions.map((option) => (
           <ActionChip
@@ -190,7 +190,7 @@ export function CheckoutScreen({ navigation }: Props) {
           <Text style={styles.secondaryButtonText}>Quay lai</Text>
         </Pressable>
         <Pressable disabled={isCheckoutSubmitting} style={[styles.button, isCheckoutSubmitting && styles.buttonDisabled]} onPress={() => void handleCheckout()}>
-          <Text style={styles.buttonText}>{isCheckoutSubmitting ? "Dang xu ly..." : "Tao booking & thanh toan"}</Text>
+          <Text style={styles.buttonText}>{isCheckoutSubmitting ? "Dang xu ly..." : "Xac nhan dat tour"}</Text>
         </Pressable>
       </View>
     </Screen>

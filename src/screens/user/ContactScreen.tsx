@@ -11,13 +11,13 @@ type Props = BottomTabScreenProps<MainTabParamList, "Contact">;
 export function ContactScreen({}: Props) {
   return (
     <Screen>
-      <AppHeader title="Liên hệ" subtitle="Màn mobile lấy ý tưởng từ `li_n_h_user`." />
+      <AppHeader title="Lien he" subtitle="Gui cau hoi hoac yeu cau ho tro cho chung toi." />
       <View style={styles.form}>
-        <TextInput placeholder="Họ và tên" placeholderTextColor={colors.textMuted} style={styles.input} />
+        <TextInput placeholder="Ho va ten" placeholderTextColor={colors.textMuted} style={styles.input} />
         <TextInput placeholder="Email" placeholderTextColor={colors.textMuted} style={styles.input} />
-        <TextInput placeholder="Nội dung" placeholderTextColor={colors.textMuted} style={[styles.input, styles.multiline]} multiline />
+        <TextInput placeholder="Noi dung" placeholderTextColor={colors.textMuted} style={[styles.input, styles.multiline]} multiline />
         <Pressable style={styles.button}>
-          <Text style={styles.buttonText}>Gửi liên hệ</Text>
+          <Text style={styles.buttonText}>Gui lien he</Text>
         </Pressable>
       </View>
     </Screen>

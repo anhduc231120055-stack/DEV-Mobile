@@ -18,7 +18,7 @@ export function AdminDashboardScreen({ navigation }: Props) {
     <Screen>
       <AppHeader
         title="Admin dashboard"
-        subtitle="Dashboard nay da san cho stats that tu backend va tach rieng khoi state cua user side."
+        subtitle="Theo doi tong quan hoat dong va truy cap nhanh cac cong cu quan tri."
         rightLabel="Dang xuat"
         onRightPress={logout}
       />
@@ -26,9 +26,9 @@ export function AdminDashboardScreen({ navigation }: Props) {
       <View style={styles.hero}>
         <View style={styles.heroText}>
           <Text style={styles.heroTitle}>Control tower</Text>
-          <Text style={styles.heroSubtitle}>{currentUser?.email || "Admin session dang duoc khoi tao."}</Text>
+          <Text style={styles.heroSubtitle}>{currentUser?.email || "Dang tai thong tin tai khoan quan tri."}</Text>
         </View>
-        <StatusBadge label={isAdminLoading ? "Dang dong bo" : "Admin session"} tone="warning" />
+        <StatusBadge label={isAdminLoading ? "Dang dong bo" : "San sang"} tone="warning" />
       </View>
 
       {adminError ? <Text style={styles.errorText}>{adminError}</Text> : null}
@@ -47,11 +47,11 @@ export function AdminDashboardScreen({ navigation }: Props) {
       </View>
 
       <View style={styles.menu}>
-        <AdminLink label="Quan ly tour" description="Doc danh sach tour, loc status va chuan bi cho CRUD." onPress={() => navigation.navigate("AdminTours")} />
-        <AdminLink label="Quan ly booking" description="Cap nhat PENDING, CONFIRMED, COMPLETED va theo doi danh sach don." onPress={() => navigation.navigate("AdminBookings")} />
-        <AdminLink label="Quan ly tai khoan" description="Doc users API, doi role USER/STAFF va xoa tai khoan neu hop le." onPress={() => navigation.navigate("AdminAccounts")} />
-        <AdminLink label="Quan ly review" description="Slot de noi moderation sau khi xong luong admin cot loi." onPress={() => navigation.navigate("AdminReviews")} />
-        <AdminLink label="Thong ke" description="Doc dashboard stats that tu backend thay vi so lieu hardcode." onPress={() => navigation.navigate("AdminStats")} />
+        <AdminLink label="Quan ly tour" description="Xem danh sach tour, cap nhat trang thai va dieu chinh noi dung." onPress={() => navigation.navigate("AdminTours")} />
+        <AdminLink label="Quan ly booking" description="Theo doi don hang va cap nhat tien do xu ly cho tung booking." onPress={() => navigation.navigate("AdminBookings")} />
+        <AdminLink label="Quan ly tai khoan" description="Kiem tra tai khoan, phan quyen va xu ly cac truong hop can can thiep." onPress={() => navigation.navigate("AdminAccounts")} />
+        <AdminLink label="Quan ly review" description="Theo doi danh gia cua khach hang va chuan bi cho cong tac kiem duyet." onPress={() => navigation.navigate("AdminReviews")} />
+        <AdminLink label="Thong ke" description="Xem nhanh KPI quan trong de danh gia hieu qua van hanh." onPress={() => navigation.navigate("AdminStats")} />
       </View>
     </Screen>
   );

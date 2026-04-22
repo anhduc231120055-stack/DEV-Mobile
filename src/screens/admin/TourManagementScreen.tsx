@@ -196,7 +196,7 @@ export function TourManagementScreen({ navigation }: Props) {
     <Screen>
       <AppHeader
         title="Quan ly tour"
-        subtitle="Admin panel nay da ghi duoc vao backend de tao, sua va xoa tour thay vi chi doc danh sach."
+        subtitle="Tao moi, cap nhat va quan ly danh sach tour trong he thong."
         onBack={() => navigation.goBack()}
         rightLabel={editingTourId ? "Tao moi" : "Tai lai"}
         onRightPress={() => {
@@ -213,9 +213,7 @@ export function TourManagementScreen({ navigation }: Props) {
         <View style={styles.editorHeader}>
           <View style={styles.titleBlock}>
             <Text style={styles.editorTitle}>{isEditing ? "Sua tour" : "Tao tour moi"}</Text>
-            <Text style={styles.editorText}>
-              Form nay map vao `POST/PUT /api/tours` voi cac truong can thiet de backend validate thanh cong.
-            </Text>
+            <Text style={styles.editorText}>Nhap day du thong tin de cap nhat noi dung tour mot cach nhat quan.</Text>
           </View>
           <StatusBadge label={isEditing ? "Edit mode" : "Create mode"} tone={isEditing ? "warning" : "success"} />
         </View>
@@ -332,7 +330,7 @@ export function TourManagementScreen({ navigation }: Props) {
       {isToursLoading ? (
         <View style={styles.loadingCard}>
           <Text style={styles.loadingTitle}>Dang tai tours...</Text>
-          <Text style={styles.loadingText}>He thong dang goi /api/tours.</Text>
+          <Text style={styles.loadingText}>He thong dang tai danh sach tour moi nhat.</Text>
         </View>
       ) : visibleTours.length === 0 ? (
         <EmptyState

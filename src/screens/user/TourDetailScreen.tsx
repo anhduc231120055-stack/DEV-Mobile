@@ -23,7 +23,7 @@ export function TourDetailScreen({ navigation }: Props) {
 
   return (
     <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
-      <AppHeader title="Chi tiet tour" subtitle="Man nay hien thi du lieu tour da map tu backend sang giao dien mobile." onBack={() => navigation.goBack()} />
+      <AppHeader title="Chi tiet tour" subtitle="Xem thong tin noi bat va lich trinh cua tour ban quan tam." onBack={() => navigation.goBack()} />
       <Image source={{ uri: selectedTour.gallery[0] ?? selectedTour.image }} style={styles.heroImage} />
 
       <Text style={styles.title}>{selectedTour.title}</Text>

@@ -15,12 +15,12 @@ export function ProfileScreen({}: Props) {
 
   return (
     <Screen>
-      <AppHeader title="Tai khoan" subtitle="Thong tin session hien tai duoc lay tu auth backend sau khi dang nhap thanh cong." />
+      <AppHeader title="Tai khoan" subtitle="Quan ly thong tin ca nhan va theo doi hoat dong cua ban." />
 
       <View style={styles.identityCard}>
         <Text style={styles.name}>{currentUser?.name ?? "Khach"}</Text>
         <Text style={styles.meta}>{currentUser?.email ?? "Chua dang nhap"}</Text>
-        <Text style={styles.role}>{currentUser?.role === "admin" ? "Admin session" : "User session"}</Text>
+        <Text style={styles.role}>{currentUser?.role === "admin" ? "Tai khoan quan tri" : "Tai khoan nguoi dung"}</Text>
       </View>
 
       <View style={styles.statsRow}>

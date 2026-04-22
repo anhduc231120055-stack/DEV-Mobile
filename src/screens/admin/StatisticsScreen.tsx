@@ -19,7 +19,7 @@ export function StatisticsScreen({ navigation }: Props) {
     <Screen>
       <AppHeader
         title="Thong ke"
-        subtitle="Man nay doc dashboard stats that tu backend, khong con hardcode KPI chinh."
+        subtitle="Theo doi KPI quan trong de danh gia tinh hinh kinh doanh."
         onBack={() => navigation.goBack()}
       />
 
@@ -32,19 +32,19 @@ export function StatisticsScreen({ navigation }: Props) {
 
       <View style={styles.sourceCard}>
         <View style={styles.sourceHeader}>
-          <Text style={styles.sourceTitle}>Dashboard source</Text>
-          <StatusBadge label={isAdminLoading ? "Dang dong bo" : "API connected"} tone="warning" />
+          <Text style={styles.sourceTitle}>Tong quan du lieu</Text>
+          <StatusBadge label={isAdminLoading ? "Dang dong bo" : "San sang"} tone="warning" />
         </View>
         <Text style={styles.sourceText}>
-          {adminError || "KPI ben duoi se phan anh truc tiep so lieu cua bookings, tours, users va payments."}
+          {adminError || "Cac chi so ben duoi giup ban theo doi doanh thu, booking va hieu suat van hanh."}
         </Text>
       </View>
 
       <View style={styles.grid}>
         <InfoCard title="Tong doanh thu" value={adminStats?.totalRevenue ?? "0d"} />
-        <InfoCard title="Tong bookings" value={String(adminStats?.totalBookings ?? 0)} />
-        <InfoCard title="Pending" value={String(adminStats?.pendingBookings ?? 0)} />
-        <InfoCard title="Users" value={String(adminStats?.totalUsers ?? 0)} />
+        <InfoCard title="Tong booking" value={String(adminStats?.totalBookings ?? 0)} />
+        <InfoCard title="Cho xu ly" value={String(adminStats?.pendingBookings ?? 0)} />
+        <InfoCard title="Nguoi dung" value={String(adminStats?.totalUsers ?? 0)} />
       </View>
 
       <View style={styles.trendPanel}>

@@ -86,7 +86,7 @@ export function BookingDetailScreen({ navigation, route }: Props) {
     <Screen>
       <AppHeader
         title="Chi tiet booking"
-        subtitle="Man nay goi GET /api/bookings/my/:id va bo sung lich su thanh toan neu backend tra ve."
+        subtitle="Theo doi thong tin don hang, lien he va lich su thanh toan."
         onBack={() => navigation.goBack()}
         rightLabel="Tai lai"
         onRightPress={() => void loadBooking()}
@@ -95,7 +95,7 @@ export function BookingDetailScreen({ navigation, route }: Props) {
       {isLoading ? (
         <View style={styles.loadingCard}>
           <Text style={styles.loadingTitle}>Dang tai booking...</Text>
-          <Text style={styles.loadingText}>Dang dong bo chi tiet don hang tu backend.</Text>
+          <Text style={styles.loadingText}>He thong dang tai chi tiet booking cua ban.</Text>
         </View>
       ) : !booking ? (
         <EmptyState title="Khong tim thay booking" description={error || "Booking nay khong ton tai hoac ban khong co quyen xem."} />
@@ -119,7 +119,7 @@ export function BookingDetailScreen({ navigation, route }: Props) {
             </View>
           </View>
 
-          <SectionTitle title="Lien he" subtitle="Thong tin user va diem hen ma backend tra ve cho booking nay." />
+          <SectionTitle title="Lien he" subtitle="Thong tin lien lac va diem hen cho chuyen di nay." />
           <View style={styles.panel}>
             <Row label="Khach dat" value={booking.customerName} />
             <Row label="Email" value={booking.userEmail || "Dang cap nhat"} />
@@ -127,9 +127,9 @@ export function BookingDetailScreen({ navigation, route }: Props) {
             <Row label="Diem hen" value={booking.meetingPoint || "Dang cap nhat"} />
           </View>
 
-          <SectionTitle title="Thanh toan" subtitle="Neu backend co payment thanh cong, thong tin se hien o day." />
+          <SectionTitle title="Thanh toan" subtitle="Theo doi cac giao dich lien quan den booking nay." />
           {payments.length === 0 ? (
-            <EmptyState title="Chua co payment" description="Booking nay chua co lich su thanh toan nao duoc tra ve tu backend." />
+            <EmptyState title="Chua co thanh toan" description="Chua ghi nhan giao dich nao cho booking nay." />
           ) : (
             <View style={styles.list}>
               {payments.map((payment) => (

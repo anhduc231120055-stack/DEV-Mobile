@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { ImageBackground, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { AppHeader } from "../../components/common/AppHeader";
 import { EmptyState } from "../../components/common/EmptyState";
 import { SectionTitle } from "../../components/common/SectionTitle";
 import { useAppContext } from "../../context/AppContext";
-import { categories } from "../../data/mockData";
 import { colors } from "../../theme/colors";
 import type { MainTabParamList } from "../../navigation/types";
 
@@ -13,24 +12,39 @@ type Props = BottomTabScreenProps<MainTabParamList, "Home">;
 
 export function HomeScreen({ navigation }: Props) {
   const { isToursLoading, refreshTours, selectTour, tourError, tours } = useAppContext();
+  const [searchQuery, setSearchQuery] = useState("");
   const featuredTour = tours[0];
+  const categorySuggestions = useMemo(() => buildCategorySuggestions(tours), [tours]);
+
+  function handleSearch() {
+    const query = searchQuery.trim();
+    navigation.navigate("Tours", query ? { query } : undefined);
+  }
 
   return (
     <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
-      <AppHeader title="Digital Voyager" subtitle="Trang chu user da dung danh sach tour tu backend thay cho mock data tinh." />
+      <AppHeader title="Digital Voyager" subtitle="Tim tour phu hop voi lich trinh va so thich cua ban." />
 
       {isToursLoading ? (
         <View style={styles.loadingCard}>
           <Text style={styles.loadingTitle}>Dang tai tour noi bat...</Text>
-          <Text style={styles.loadingText}>He thong dang lay du lieu tu GET /api/tours.</Text>
+          <Text style={styles.loadingText}>He thong dang tai danh sach tour moi nhat.</Text>
         </View>
       ) : featuredTour ? (
         <ImageBackground source={{ uri: featuredTour.image }} style={styles.hero} imageStyle={styles.heroImage}>
           <View style={styles.heroOverlay}>
             <Text style={styles.heroTitle}>Cham den chan troi moi</Text>
             <View style={styles.searchBox}>
-              <TextInput editable={false} placeholder="Ban muon di dau?" placeholderTextColor="#8EA5C3" style={styles.input} />
-              <Pressable onPress={() => navigation.navigate("Tours")} style={styles.searchButton}>
+              <TextInput
+                placeholder="Ban muon di dau?"
+                placeholderTextColor="#8EA5C3"
+                style={styles.input}
+                value={searchQuery}
+                onChangeText={setSearchQuery}
+                onSubmitEditing={handleSearch}
+                returnKeyType="search"
+              />
+              <Pressable onPress={handleSearch} style={styles.searchButton}>
                 <Text style={styles.searchButtonText}>Kham pha</Text>
               </Pressable>
             </View>
@@ -51,11 +65,11 @@ export function HomeScreen({ navigation }: Props) {
 
       <SectionTitle title="Kham pha theo so thich" />
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.categoryRow}>
-        {categories.map((item) => (
-          <View key={item.id} style={styles.categoryCard}>
+        {categorySuggestions.map((item) => (
+          <Pressable key={item.id} style={styles.categoryCard} onPress={() => navigation.navigate("Tours", { query: item.query })}>
             <Text style={styles.categoryEmoji}>{item.emoji}</Text>
             <Text style={styles.categoryLabel}>{item.label}</Text>
-          </View>
+          </Pressable>
         ))}
       </ScrollView>
 
@@ -210,3 +224,33 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
 });
+
+type CategorySuggestion = {
+  id: string;
+  label: string;
+  emoji: string;
+  query: string;
+};
+
+function buildCategorySuggestions(tours: Array<{ title: string; location: string; tagline: string; highlights: string[] }>): CategorySuggestion[] {
+  const fallback: CategorySuggestion[] = [
+    { id: "bien", label: "Bien", emoji: "🏖️", query: "bien" },
+    { id: "nghi-duong", label: "Nghi duong", emoji: "🌿", query: "nghi duong" },
+    { id: "van-hoa", label: "Van hoa", emoji: "🏛️", query: "van hoa" },
+    { id: "am-thuc", label: "Am thuc", emoji: "🍜", query: "am thuc" },
+  ];
+
+  const recipe = [
+    { id: "bien", label: "Bien", emoji: "🏖️", keywords: ["bien", "dao", "san ho", "phu quoc", "ha long"] },
+    { id: "nghi-duong", label: "Nghi duong", emoji: "🌿", keywords: ["nghi duong", "resort", "thu gian"] },
+    { id: "van-hoa", label: "Van hoa", emoji: "🏛️", keywords: ["van hoa", "di tich", "kyoto", "tokyo"] },
+    { id: "am-thuc", label: "Am thuc", emoji: "🍜", keywords: ["am thuc", "hai san", "dac san", "cho dem"] },
+  ] satisfies Array<Omit<CategorySuggestion, "query"> & { keywords: string[] }>;
+
+  const haystack = tours.map((tour) => `${tour.title} ${tour.location} ${tour.tagline} ${tour.highlights.join(" ")}`.toLowerCase());
+  const matches = recipe
+    .filter((item) => haystack.some((value) => item.keywords.some((keyword) => value.includes(keyword))))
+    .map((item) => ({ id: item.id, label: item.label, emoji: item.emoji, query: item.label }));
+
+  return matches.length > 0 ? matches : fallback;
+}
